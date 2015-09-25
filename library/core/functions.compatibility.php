@@ -339,6 +339,8 @@ if (!function_exists('requestContext')) {
                 $context = 'unknown';
             }
         }
+
+        trace($context, 'Context for cookie setting.');
         return $context;
     }
 }
