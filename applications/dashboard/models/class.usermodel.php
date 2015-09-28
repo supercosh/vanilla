@@ -3686,7 +3686,7 @@ class UserModel extends Gdn_Model {
      * @return string
      */
     public function setTransientKey($UserID, $ExplicitKey = '') {
-        $Key = $ExplicitKey == '' ? RandomString(12) : $ExplicitKey;
+        $Key = $ExplicitKey == '' ? betterRandomString(16, 'Aa0') : $ExplicitKey;
         $this->saveAttribute($UserID, 'TransientKey', $Key);
         return $Key;
     }
