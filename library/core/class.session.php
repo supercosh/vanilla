@@ -469,6 +469,13 @@ class Gdn_Session {
      * @return bool|object|string
      */
     public function ensureTransientKey() {
+        $classname = get_class();
+        Logger::event(
+            'getting_transient_key',
+            Logger::ERROR,
+            'Transient key: ' . $this->_TransientKey . ' in ' . debug_backtrace()[1]['function'] . ' in ' . debug_backtrace()[5]['function']
+        );
+
         if (!$this->_TransientKey) {
             // Generate a transient key in the browser.
             $tk = substr(md5(microtime()), 0, 16);
