@@ -469,12 +469,11 @@ class Gdn_Session {
      * @return bool|object|string
      */
     public function ensureTransientKey() {
-        $classname = get_class();
-        Logger::event(
-            'getting_transient_key',
-            Logger::ERROR,
-            'Transient key: ' . $this->_TransientKey . ' in ' . debug_backtrace()[1]['function'] . ' in ' . debug_backtrace()[5]['function']
-        );
+//        Logger::event(
+//            'getting_transient_key',
+//            Logger::ERROR,
+//            'Transient key: ' . $this->_TransientKey . ' in ' . debug_backtrace()[1]['function'] . ' in ' . debug_backtrace()[5]['function']
+//        );
 
         if (!$this->_TransientKey) {
             // Generate a transient key in the browser.
@@ -509,7 +508,12 @@ class Gdn_Session {
      */
     public function validateTransientKey($ForeignKey, $ValidateUser = true) {
         static $ForceValid = false;
-
+//        logger here
+        Logger::event(
+            'Getting_Foreign_Key',
+            Logger::INFO,
+            'Foreign key: ' . $ForeignKey . ' in ' . debug_backtrace()[1]['function'] . ' in ' . debug_backtrace()[5]['function']
+        );
         if ($ForeignKey === true) {
             $ForceValid = true;
         }
@@ -520,6 +524,13 @@ class Gdn_Session {
 
         if (!isset($Return)) {
             // Checking the postback here is a kludge, but is absolutely necessary until we can test the ValidatePostBack more.
+
+//            More logging
+            Logger::event(
+                'Comparing_Foreign_and_Transient_Keys',
+                Logger::INFO,
+                'Transient key: ' . $this->_TransientKey . ', Foreign key: ' . $ForeignKey . ' in ' . debug_backtrace()[1]['function'] . ' in ' . debug_backtrace()[5]['function']
+            );
             $Return = ($ForceValid && Gdn::request()->isPostBack()) || ($ForeignKey == $this->_TransientKey && $this->_TransientKey !== false);
         }
         if (!$Return) {
